@@ -74,10 +74,10 @@ app.get('/health', (req, res) => {
 app.use('/api', routes);
 
 // Serve frontend pages (catch-all route for React Router)
-app.get('*', (req, res) => {
+app.use((req, res, next) => {
   // Skip API routes
   if (req.path.startsWith('/api')) {
-    return res.status(404).json({ success: false, message: 'API endpoint not found' });
+    return next();
   }
   
   // For now, serve a simple HTML page that loads the React app
