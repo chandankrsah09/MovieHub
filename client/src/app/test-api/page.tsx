@@ -4,11 +4,11 @@ import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { moviesAPI } from '@/lib/api';
 import { Button } from '@/components/ui/Button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
+import { Card, CardContent, CardHeader } from '@/components/ui/Card';
 import { CheckCircle, XCircle, Loader2 } from 'lucide-react';
 
 export default function TestAPIPage() {
-  const [testResults, setTestResults] = useState<Record<string, any>>({});
+  const [testResults, setTestResults] = useState<Record<string, { success: boolean; data?: unknown; error?: unknown }>>({});
 
   const { data: moviesData, isLoading, error } = useQuery({
     queryKey: ['movies-test'],
@@ -36,7 +36,7 @@ export default function TestAPIPage() {
     }
   };
 
-  const getStatusIcon = (result: any) => {
+  const getStatusIcon = (result: { success: boolean; data?: unknown; error?: unknown } | null) => {
     if (!result) return <Loader2 className="h-4 w-4 animate-spin text-gray-400" />;
     if (result.success) return <CheckCircle className="h-4 w-4 text-green-500" />;
     return <XCircle className="h-4 w-4 text-red-500" />;
@@ -58,10 +58,10 @@ export default function TestAPIPage() {
           {/* Backend Status */}
           <Card>
             <CardHeader>
-              <CardTitle className="flex items-center gap-2">
+              <h3 className="text-xl font-bold text-gray-900 flex items-center gap-2">
                 <span>Backend Status</span>
                 <span className="text-green-500">🟢</span>
-              </CardTitle>
+              </h3>
             </CardHeader>
             <CardContent>
               <div className="space-y-2">
@@ -75,10 +75,10 @@ export default function TestAPIPage() {
           {/* Frontend Status */}
           <Card>
             <CardHeader>
-              <CardTitle className="flex items-center gap-2">
+              <h3 className="text-xl font-bold text-gray-900 flex items-center gap-2">
                 <span>Frontend Status</span>
                 <span className="text-blue-500">🔵</span>
-              </CardTitle>
+              </h3>
             </CardHeader>
             <CardContent>
               <div className="space-y-2">
@@ -93,7 +93,7 @@ export default function TestAPIPage() {
         {/* Test Results */}
         <Card className="mb-8">
           <CardHeader>
-            <CardTitle>API Test Results</CardTitle>
+            <h3 className="text-xl font-bold text-gray-900">API Test Results</h3>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
@@ -119,7 +119,7 @@ export default function TestAPIPage() {
         {/* Movies Data Test */}
         <Card>
           <CardHeader>
-            <CardTitle>Movies API Test (React Query)</CardTitle>
+            <h3 className="text-xl font-bold text-gray-900">Movies API Test (React Query)</h3>
           </CardHeader>
           <CardContent>
             {isLoading && (
@@ -143,7 +143,7 @@ export default function TestAPIPage() {
                   <span>Successfully loaded {moviesData.data.data?.length || 0} movies</span>
                 </div>
                 
-                {moviesData.data.data?.slice(0, 3).map((movie: any) => (
+                {moviesData.data.data?.slice(0, 3).map((movie: { _id: string; title: string; genre: string; releaseYear: number; description: string }) => (
                   <div key={movie._id} className="p-4 bg-gray-50 rounded-lg">
                     <h3 className="font-semibold text-gray-900">{movie.title}</h3>
                     <p className="text-sm text-gray-600">{movie.genre} • {movie.releaseYear}</p>

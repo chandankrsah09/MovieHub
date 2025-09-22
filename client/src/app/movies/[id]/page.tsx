@@ -13,6 +13,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { formatDate } from '@/lib/utils';
 import { toast } from 'react-hot-toast';
 
+
 export default function MovieDetailPage() {
   const params = useParams();
   const router = useRouter();
