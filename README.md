@@ -4,9 +4,9 @@ A full-stack movie rating and review platform built with modern technologies, fe
 
 ## 🚀 **Live Demo**
 
-- **Frontend**: http://localhost:3000
-- **Backend API**: http://localhost:5000/api
-- **API Health Check**: http://localhost:5000/api/health
+- **Frontend**: https://movie-hub-wfby.vercel.app/
+- **Backend API**: https://moviehub-uc48.onrender.com/
+- **API Health Check**: https://moviehub-uc48.onrender.com/api/health
 
 ## ✨ **Features**
 
