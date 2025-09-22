@@ -19,13 +19,34 @@ connectDB();
 
 // CORS configuration
 const corsOptions = {
-  origin: [
-    'http://localhost:3000', // Local development
-    'https://moviehub-frontend.onrender.com', // Production frontend (when deployed)
-    'https://*.onrender.com', // Any Render subdomain
-    'https://*.vercel.app', // Vercel deployments
-    'https://*.netlify.app', // Netlify deployments
-  ],
+  origin: function (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    
+    const allowedOrigins = [
+      'http://localhost:3000', // Local development
+      'https://moviehub-frontend.onrender.com', // Production frontend (when deployed)
+      'https://movie-hub-wfby.vercel.app', // Your specific Vercel deployment
+      'https://moviehub-uc48.onrender.com', // Backend URL
+    ];
+    
+    // Check if origin is allowed
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+    
+    // Allow any Vercel, Render, or Netlify subdomain
+    if (
+      origin.includes('.vercel.app') ||
+      origin.includes('.onrender.com') ||
+      origin.includes('.netlify.app')
+    ) {
+      return callback(null, true);
+    }
+    
+    // Reject other origins
+    callback(new Error('Not allowed by CORS'));
+  },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
