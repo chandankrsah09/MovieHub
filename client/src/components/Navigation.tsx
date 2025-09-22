@@ -4,7 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/Button';
-import { Film, User, LogOut, Plus, Home, Star } from 'lucide-react';
+import { Film, User, LogOut, Plus, Home, Star, TestTube } from 'lucide-react';
 
 export function Navigation() {
   const { user, logout } = useAuth();
@@ -55,6 +55,14 @@ export function Navigation() {
                     <span className="font-medium">Admin</span>
                   </Link>
                 )}
+
+                <Link
+                  href="/test-api"
+                  className="flex items-center space-x-2 text-gray-700 hover:text-blue-600 transition-all duration-300 hover:scale-105"
+                >
+                  <TestTube className="h-5 w-5" />
+                  <span className="font-medium">API Test</span>
+                </Link>
               </div>
 
           {/* User Menu */}
